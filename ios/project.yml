@@ -1,0 +1,39 @@
+name: Vivarium
+options:
+  bundleIdPrefix: br.com.vivarium
+  deploymentTarget:
+    iOS: "15.0"
+settings:
+  base:
+    MARKETING_VERSION: "0.3"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+targets:
+  Vivarium:
+    type: application
+    platform: iOS
+    sources:
+      - path: Vivarium
+        excludes:
+          - "www/**"
+      - path: Vivarium/www
+        type: folder
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: br.com.vivarium.app
+        PRODUCT_NAME: Vivarium
+        INFOPLIST_FILE: Vivarium/Info.plist
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_BITCODE: NO
+schemes:
+  Vivarium:
+    build:
+      targets:
+        Vivarium: all
+    run:
+      config: Debug
+    archive:
+      config: Release
