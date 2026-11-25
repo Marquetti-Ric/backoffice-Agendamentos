@@ -1,6 +1,6 @@
 
 const MODO=(window.CONFIG&&CONFIG.supabaseUrl&&CONFIG.supabaseAnonKey)?"nuvem":"local";
-const APP_EXEMPLO={android:"apps/vivarium.apk",versao:"0.3-prototipo",tamanho:"1,3 MB",data:"19/11/2026",icone:"apps/vivarium-icone.png",ios:"Em breve"};
+const APP_EXEMPLO={android:"apps/vivarium.apk",versao:"0.3-prototipo",tamanho:"1,3 MB",data:"19/11/2026",icone:"apps/vivarium-icone.png",ios:"testflight",iosBuild:"7",iosData:"25/11/2026",iosNome:"Vivarium Spa",iosLink:""};
 
 /* ---------- utilidades ---------- */
 const $=(s,r=document)=>r.querySelector(s);
@@ -431,13 +431,16 @@ function vApp(){
       <div class="lbl">Como instalar</div>
       <ol class="steps"><li>Baixe o arquivo no celular Android ou envie para ele.</li><li>Abra o arquivo e permita “instalar apps desconhecidos” quando o Android pedir.</li><li>Se o Play Protect avisar, toque em “Mais detalhes” e depois em “Instalar mesmo assim”. É um protótipo ainda fora da Play Store.</li></ol>
     </div>
-    <div class="store soon">
-      <h3><svg class="os" viewBox="0 0 24 24" fill="var(--tinta2)"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7a4.5 4.5 0 0 0-3.6-1.9c-1.5-.2-3 .9-3.7.9-.8 0-2-.9-3.2-.9a4.8 4.8 0 0 0-4 2.4c-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4a10 10 0 0 0 1.4-2.8 4.3 4.3 0 0 1-2.5-3.8zM14 5.6A4.3 4.3 0 0 0 15 2.5a4.4 4.4 0 0 0-2.9 1.5 4.1 4.1 0 0 0-1 3 3.6 3.6 0 0 0 2.9-1.4z"/></svg>iPhone</h3>
-      <p style="margin:0;font-size:13px;color:var(--tinta2)">Em breve na App Store. A versão para iPhone depende de uma conta de desenvolvedor Apple e da revisão da loja.</p>
-      <span class="pill st-pendente" style="align-self:flex-start">Em breve</span>
-      <div class="lbl">Enquanto isso</div>
-      <p style="margin:0;font-size:12.5px;color:var(--tinta2)">Clientes com iPhone podem usar a versão web do protótipo no navegador, com a mesma experiência.</p>
-    </div>
+    ${(()=>{const st=A.ios||"em_breve",tf=st==="testflight",loja=st==="app_store";return `<div class="store ${loja?"":"soon"}">
+      <h3><svg class="os" viewBox="0 0 24 24" fill="${loja?"var(--folha)":"var(--tinta2)"}"><path d="M16.4 12.7c0-2.4 2-3.6 2.1-3.7a4.5 4.5 0 0 0-3.6-1.9c-1.5-.2-3 .9-3.7.9-.8 0-2-.9-3.2-.9a4.8 4.8 0 0 0-4 2.4c-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4a10 10 0 0 0 1.4-2.8 4.3 4.3 0 0 1-2.5-3.8zM14 5.6A4.3 4.3 0 0 0 15 2.5a4.4 4.4 0 0 0-2.9 1.5 4.1 4.1 0 0 0-1 3 3.6 3.6 0 0 0 2.9-1.4z"/></svg>iPhone</h3>
+      ${loja?`<p style="margin:0;font-size:13px;color:var(--tinta2)">Disponível na App Store${A.iosNome?` como “${esc(A.iosNome)}”`:""}.</p><span class="pill st-confirmada" style="align-self:flex-start">Na App Store</span>${A.iosLink?`<a class="btn pri" href="${esc(A.iosLink)}" target="_blank" rel="noopener" style="align-self:flex-start">Abrir na App Store</a>`:""}`
+      :tf?`<p style="margin:0;font-size:13px;color:var(--tinta2)">Em teste pelo TestFlight${A.iosBuild?`, build ${esc(A.iosBuild)}`:""}${A.iosData?` de ${esc(A.iosData)}`:""}. Ainda não está na App Store.</p>
+      <span class="pill st-checkin" style="align-self:flex-start">Em teste (TestFlight)</span>
+      ${A.iosLink?`<a class="btn pri" href="${esc(A.iosLink)}" target="_blank" rel="noopener" style="align-self:flex-start">Entrar no teste</a><div class="lbl">Como instalar</div><ol class="steps"><li>Instale o app TestFlight da Apple no iPhone.</li><li>Abra o link acima no iPhone e toque em “Aceitar” e depois em “Instalar”.</li></ol>`
+        :`<div class="lbl">Quem pode testar</div><p style="margin:0;font-size:12.5px;color:var(--tinta2)">Por enquanto só a equipe cadastrada no App Store Connect. O link de convite aparece aqui quando o teste for aberto para clientes.</p>`}`
+      :`<p style="margin:0;font-size:13px;color:var(--tinta2)">Em breve na App Store. A versão para iPhone depende de uma conta de desenvolvedor Apple e da revisão da loja.</p><span class="pill st-pendente" style="align-self:flex-start">Em breve</span>`}
+      ${loja?"":`<div class="lbl">Enquanto isso</div><p style="margin:0;font-size:12.5px;color:var(--tinta2)">Clientes com iPhone podem usar a versão web do app no navegador, com a mesma experiência.</p>`}
+    </div>`})()}
   </div>`;
 }
 

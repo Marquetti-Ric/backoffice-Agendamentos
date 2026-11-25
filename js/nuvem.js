@@ -259,8 +259,11 @@ function modalCfgEmpresa(id){
    <label>Versão do app<input class="f" id="ce-ver" value="${esc(a.versao||"")}"></label>
    <label>Tamanho<input class="f" id="ce-tam" value="${esc(a.tamanho||"")}" placeholder="1,3 MB"></label>
    <label>Data da versão<input class="f" id="ce-data" value="${esc(a.data||"")}" placeholder="19/11/2026"></label>
-   <label>Ícone (link)<input class="f" id="ce-ico" value="${esc(a.icone||"")}" placeholder="apps/empresa-icone.png"></label>`,
-  ()=>{const app={android:$("#ce-apk").value.trim(),versao:$("#ce-ver").value.trim(),tamanho:$("#ce-tam").value.trim(),data:$("#ce-data").value.trim(),icone:$("#ce-ico").value.trim()};
+   <label>Ícone (link)<input class="f" id="ce-ico" value="${esc(a.icone||"")}" placeholder="apps/empresa-icone.png"></label>
+   <label>App para iPhone<select class="f" id="ce-ios">${[["em_breve","Em breve"],["testflight","Em teste (TestFlight)"],["app_store","Na App Store"]].map(([k,n])=>`<option value="${k}" ${(a.ios||"em_breve")===k?"selected":""}>${n}</option>`).join("")}</select></label>
+   <label>Build do iPhone<input class="f" id="ce-iosb" value="${esc(a.iosBuild||"")}" placeholder="7"></label>
+   <label class="full">Link do TestFlight ou da App Store<input class="f" id="ce-iosl" value="${esc(a.iosLink||"")}" placeholder="https://testflight.apple.com/join/…"></label>`,
+  ()=>{const app={android:$("#ce-apk").value.trim(),versao:$("#ce-ver").value.trim(),tamanho:$("#ce-tam").value.trim(),data:$("#ce-data").value.trim(),icone:$("#ce-ico").value.trim(),ios:$("#ce-ios").value,iosBuild:$("#ce-iosb").value.trim(),iosLink:$("#ce-iosl").value.trim(),iosData:a.iosBuild===$("#ce-iosb").value.trim()?(a.iosData||""):new Date().toLocaleDateString("pt-BR"),iosNome:a.iosNome||""};
     sb.from("empresas").update({plano:$("#ce-plano").value,ativa:$("#ce-ativa").checked,app}).eq("id",id).then(({error})=>{toast(error?traduz(error):"Empresa atualizada");platCache=null;if(ctx.empresa&&ctx.empresa.id===id)db.app=app;render()});
     return "Salvando…";});
 }
